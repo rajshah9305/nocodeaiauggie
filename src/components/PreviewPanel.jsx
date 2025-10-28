@@ -36,7 +36,7 @@ const PreviewPanel = ({ code, isGenerating }) => {
             ref={iframeRef}
             className="preview-iframe"
             title="App Preview"
-            sandbox="allow-scripts allow-modals"
+            sandbox="allow-scripts allow-modals allow-same-origin"
           />
         ) : (
           <div className="preview-placeholder">

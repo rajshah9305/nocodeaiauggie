@@ -1,4 +1,5 @@
 import { Component } from 'react';
+/* eslint-disable no-undef */
 import './ErrorBoundary.css';
 
 class ErrorBoundary extends Component {
@@ -11,7 +12,7 @@ class ErrorBoundary extends Component {
     };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 

@@ -17,6 +17,7 @@ function App() {
   const [apiKey, setApiKey] = useState('');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
+  const [showSplitView, setShowSplitView] = useState(false);
 
   // Load API key from localStorage on mount
   useEffect(() => {
@@ -33,6 +34,20 @@ function App() {
 
   const handleGenerate = async (description) => {
     // Early API key validation
+    if (!apiKey) {
+      const errorMessage = 'API key is not set. Please add your API key in Settings.';
+      setError(errorMessage);
+      setIsSettingsOpen(true);
+      const errorChatMessage = {
+        id: Date.now(),
+        type: 'error',
+        content: errorMessage,
+        timestamp: new Date(),
+      };
+      setChatMessages((prev) => [...prev, errorChatMessage]);
+      return;
+    }
+
     try {
       validateApiKey(apiKey);
     } catch (e) {
@@ -51,6 +66,7 @@ function App() {
 
     setIsGenerating(true);
     setError('');
+    setShowSplitView(true); // Show split view when generating
 
     // Add user message to chat
     const userMessage = {
@@ -146,29 +162,43 @@ function App() {
         )}
 
         <div className="app-content">
-          <Split
-            sizes={[50, 50]}
-            minSize={300}
-            gutterSize={8}
-            gutterAlign="center"
-            snapOffset={30}
-            dragInterval={1}
-            direction="horizontal"
-            cursor="col-resize"
-            className="split-container"
-          >
-            <CodeEditor code={code} onCodeChange={handleCodeChange} />
-            <PreviewPanel code={code} isGenerating={isGenerating} />
-          </Split>
+          {showSplitView ? (
+            <Split
+              sizes={[50, 50]}
+              minSize={300}
+              gutterSize={8}
+              gutterAlign="center"
+              snapOffset={30}
+              dragInterval={1}
+              direction="horizontal"
+              cursor="col-resize"
+              className="split-container"
+            >
+              <CodeEditor code={code} onCodeChange={handleCodeChange} isGenerating={isGenerating} />
+              <PreviewPanel code={code} isGenerating={isGenerating} />
+            </Split>
+          ) : (
+            <ChatInterface
+              onGenerate={handleGenerate}
+              isGenerating={isGenerating}
+              apiKey={apiKey}
+              onCodeSelect={handleCodeSelect}
+              chatMessages={chatMessages}
+              fullScreen={true}
+            />
+          )}
         </div>
 
-        <ChatInterface
-          onGenerate={handleGenerate}
-          isGenerating={isGenerating}
-          apiKey={apiKey}
-          onCodeSelect={handleCodeSelect}
-          chatMessages={chatMessages}
-        />
+        {showSplitView && (
+          <ChatInterface
+            onGenerate={handleGenerate}
+            isGenerating={isGenerating}
+            apiKey={apiKey}
+            onCodeSelect={handleCodeSelect}
+            chatMessages={chatMessages}
+            fullScreen={false}
+          />
+        )}
 
         <SettingsModal
           isOpen={isSettingsOpen}

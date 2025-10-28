@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Copy, Download, RotateCcw, Edit2, Loader } from 'lucide-react';
 import './ChatInterface.css';
 
-const ChatInterface = ({ onGenerate, isGenerating, apiKey, onCodeSelect, chatMessages = [] }) => {
+const ChatInterface = ({ onGenerate, isGenerating, apiKey, onCodeSelect, chatMessages = [], fullScreen = true }) => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [copiedMessageId, setCopiedMessageId] = useState(null);
@@ -63,7 +63,7 @@ const ChatInterface = ({ onGenerate, isGenerating, apiKey, onCodeSelect, chatMes
   };
 
   return (
-    <div className="chat-interface">
+    <div className={`chat-interface ${!fullScreen ? 'compact' : ''}`}>
       <div className="chat-messages">
         {chatMessages.length === 0 ? (
           <div className="chat-empty-state">

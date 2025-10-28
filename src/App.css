@@ -144,6 +144,28 @@
   }
 }
 
+@keyframes expandView {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes collapseView {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
 .error-content {
   display: flex;
   justify-content: space-between;
@@ -195,12 +217,14 @@
   overflow: hidden;
   display: flex;
   min-height: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .split-container {
   display: flex;
   flex: 1;
   overflow: hidden;
+  animation: expandView 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gutter {
