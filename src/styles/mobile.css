@@ -1,0 +1,439 @@
+/**
+ * Mobile Optimization Styles
+ * Responsive design for mobile devices
+ */
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .app-header {
+    padding: 12px 16px;
+  }
+
+  .header-branding {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .header-logo {
+    font-size: 24px;
+  }
+
+  .app-title {
+    font-size: 18px;
+  }
+
+  .app-subtitle {
+    font-size: 12px;
+  }
+
+  .app-content {
+    height: 50vh;
+    min-height: 300px;
+  }
+
+  .split-container {
+    flex-direction: column !important;
+  }
+
+  .code-editor,
+  .preview-panel {
+    width: 100% !important;
+    height: 50% !important;
+  }
+
+  .code-editor-header,
+  .preview-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .chat-interface {
+    height: 40vh;
+    min-height: 200px;
+  }
+
+  .chat-messages {
+    max-height: calc(40vh - 120px);
+  }
+
+  .chat-input-area {
+    padding: 12px;
+  }
+
+  .chat-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .send-button {
+    padding: 8px 12px;
+  }
+
+  .example-prompts {
+    flex-direction: column;
+  }
+
+  .example-button {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .format-button {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .format-menu {
+    min-width: 120px;
+  }
+
+  .format-option {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .icon-button {
+    padding: 6px;
+  }
+
+  .error-banner {
+    padding: 12px;
+  }
+
+  .error-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .error-close {
+    align-self: flex-end;
+  }
+}
+
+/* Mobile phones (480px and below) */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 10px 12px;
+  }
+
+  .header-branding {
+    gap: 6px;
+  }
+
+  .header-logo {
+    font-size: 20px;
+  }
+
+  .app-title {
+    font-size: 16px;
+  }
+
+  .app-subtitle {
+    font-size: 11px;
+  }
+
+  .settings-button {
+    padding: 6px;
+  }
+
+  .app-content {
+    height: 45vh;
+  }
+
+  .chat-interface {
+    height: 45vh;
+  }
+
+  .chat-messages {
+    max-height: calc(45vh - 110px);
+  }
+
+  .chat-message {
+    padding: 8px 10px;
+    margin: 6px 0;
+  }
+
+  .message-content {
+    font-size: 13px;
+  }
+
+  .message-timestamp {
+    font-size: 10px;
+  }
+
+  .chat-input-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .chat-input {
+    width: 100%;
+    font-size: 13px;
+    padding: 8px;
+    min-height: 60px;
+  }
+
+  .send-button {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .example-button {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .format-button {
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+
+  .format-menu {
+    min-width: 100px;
+    right: -10px;
+  }
+
+  .format-option {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .format-icon {
+    font-size: 14px;
+  }
+
+  .icon-button {
+    padding: 5px;
+  }
+
+  .icon-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .error-banner {
+    padding: 10px;
+  }
+
+  .error-content {
+    font-size: 12px;
+  }
+
+  .error-close {
+    font-size: 16px;
+    padding: 2px 4px;
+  }
+
+  /* Editor placeholder text */
+  .editor-placeholder {
+    padding: 16px;
+  }
+
+  .editor-placeholder h3 {
+    font-size: 14px;
+  }
+
+  .editor-placeholder p {
+    font-size: 12px;
+  }
+
+  /* Preview placeholder */
+  .preview-placeholder {
+    padding: 16px;
+  }
+
+  .preview-placeholder h3 {
+    font-size: 14px;
+  }
+
+  .preview-placeholder p {
+    font-size: 12px;
+  }
+
+  /* Settings modal */
+  .settings-modal {
+    width: 90vw;
+    max-width: 100%;
+    max-height: 90vh;
+  }
+
+  .modal-content {
+    padding: 16px;
+  }
+
+  .modal-header h2 {
+    font-size: 16px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+  }
+
+  .form-group input {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+
+/* Small phones (360px and below) */
+@media (max-width: 360px) {
+  .app-title {
+    font-size: 14px;
+  }
+
+  .app-subtitle {
+    display: none;
+  }
+
+  .header-logo {
+    font-size: 18px;
+  }
+
+  .chat-input {
+    min-height: 50px;
+    font-size: 12px;
+  }
+
+  .example-button {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  .format-button span {
+    display: none;
+  }
+
+  .format-button {
+    padding: 4px 6px;
+  }
+
+  .icon-button {
+    padding: 4px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch target sizes */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .icon-button {
+    min-height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .send-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .example-button {
+    min-height: 40px;
+    padding: 10px 12px;
+  }
+
+  /* Remove hover effects on touch devices */
+  button:hover {
+    transform: none;
+  }
+
+  .icon-button:hover {
+    background: none;
+  }
+
+  /* Add active state instead */
+  button:active {
+    opacity: 0.8;
+  }
+
+  /* Improve textarea on mobile */
+  textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+  }
+
+  /* Improve input fields */
+  input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Landscape orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-header {
+    padding: 8px 12px;
+  }
+
+  .app-title {
+    font-size: 14px;
+  }
+
+  .app-subtitle {
+    display: none;
+  }
+
+  .app-content {
+    height: 50vh;
+  }
+
+  .chat-interface {
+    height: 40vh;
+  }
+
+  .chat-messages {
+    max-height: calc(40vh - 100px);
+  }
+
+  .chat-input {
+    min-height: 40px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .app-header,
+  .chat-interface,
+  .code-editor-header,
+  .preview-header {
+    display: none;
+  }
+
+  .app-content {
+    height: auto;
+  }
+
+  .code-editor,
+  .preview-panel {
+    width: 100%;
+    height: auto;
+    page-break-inside: avoid;
+  }
+}
+
