@@ -5,11 +5,10 @@
   "env": {
     "VITE_GEMINI_API_KEY": "@gemini_api_key"
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "status": 200
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
