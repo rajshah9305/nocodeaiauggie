@@ -38,38 +38,6 @@ A web-based no-code AI application builder that transforms natural language desc
 - Link to Google AI Studio for API key generation
 - About section with version and tech stack information
 
-## Layout & UI Structure
-
-### Two-Panel Split Layout with Chat
-1. **Left Panel**: Code Editor with Monaco Editor
-2. **Right Panel**: Live Preview Window
-3. **Bottom Panel**: Chat Interface for app generation requests
-
-### Responsive Design
-- Resizable split panels with drag-to-resize functionality
-- Adapts to different screen sizes
-- Professional header with branding and settings button
-
-## Design Specifications
-
-### Color Palette
-- **Background**: #FFFFFF (white)
-- **Text**: #000000 (black)
-- **Accent/Primary**: #FF6B35 (orange)
-- **Secondary Background**: #F5F5F5 (light grey)
-- **Borders**: #E0E0E0 (grey)
-
-### Typography
-- **Code**: JetBrains Mono
-- **UI Text**: Inter or Roboto
-
-### Design Principles
-- Clean, minimal interface with professional appearance
-- Clear section divisions with borders and spacing
-- Similar to modern development tools (VS Code-like layout)
-- Smooth animations and transitions
-- Responsive split panels with visual feedback
-
 ## Getting Started
 
 ### Prerequisites
