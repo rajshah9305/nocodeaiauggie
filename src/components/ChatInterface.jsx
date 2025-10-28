@@ -19,13 +19,6 @@ const ChatInterface = ({ onGenerate, isGenerating, apiKey, onCodeSelect, chatMes
   const handleSendMessage = async () => {
     if (!input.trim() || !apiKey || isGenerating) return;
 
-    const userMessage = {
-      id: Date.now(),
-      type: 'user',
-      content: input,
-      timestamp: new Date(),
-    };
-
     // Add user message to parent state via callback
     onGenerate(input);
     setInput('');
@@ -41,13 +34,6 @@ const ChatInterface = ({ onGenerate, isGenerating, apiKey, onCodeSelect, chatMes
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
-    }
-  };
-
-  const handleRegenerateMessage = (messageId) => {
-    const message = chatMessages.find((m) => m.id === messageId);
-    if (message && message.type === 'user') {
-      setInput(message.content);
     }
   };
 
@@ -169,7 +155,7 @@ const ChatInterface = ({ onGenerate, isGenerating, apiKey, onCodeSelect, chatMes
                   )}
 
                   {message.type === 'error' && (
-                    <div className="error-message-bubble">
+                    <div className={`error-message-bubble ${message.content.toLowerCase().includes('rate limit') ? 'rate-limit' : ''}`}>
                       <p>⚠️ {message.content}</p>
                     </div>
                   )}

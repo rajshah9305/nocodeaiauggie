@@ -1,7 +1,24 @@
 {
-  "name": "newnocoderaiapp",
+  "name": "ai-app-builder",
+  "description": "Transform natural language descriptions into fully functional web applications using Google Gemini AI",
+  "author": "Raj Shah",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rajshah9305/nocodeaiauggie.git"
+  },
+  "homepage": "https://github.com/rajshah9305/nocodeaiauggie",
+  "keywords": [
+    "ai",
+    "code-generation",
+    "gemini",
+    "react",
+    "vite",
+    "no-code",
+    "web-app-builder"
+  ],
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +27,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/genai": "^1.27.0",
     "@google/generative-ai": "^0.24.1",
     "@monaco-editor/react": "^4.7.0",
     "lucide-react": "^0.548.0",
@@ -26,6 +44,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
+    "terser": "^5.44.0",
     "vite": "^7.1.7"
   }
 }

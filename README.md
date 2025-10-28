@@ -1,192 +1,208 @@
-# RAJ AI APP BUILDER - No-Code Application Generator
+# 🚀 AI App Builder
 
-A web-based no-code AI application builder that transforms natural language descriptions into functional web applications using the Gemini API.
+Transform natural language descriptions into fully functional web applications using Google's Gemini AI. Build, edit, and preview HTML/CSS/JavaScript applications in real-time.
 
-## Features
+## ✨ Features
 
-### 1. **Chat-Based Natural Language Interface**
-- Conversational chat interface for describing desired applications
-- Send button to process descriptions
-- Example prompts to guide users (Todo List, Calculator, Weather Dashboard)
-- Chat history showing all generated applications and user requests
-- Real-time typing indicators during generation
+- **AI-Powered Code Generation**: Describe your app idea and let AI generate complete, functional code
+- **Live Code Editor**: Edit generated code with Monaco Editor with syntax highlighting
+- **Real-Time Preview**: See your changes instantly in the live preview panel
+- **Chat Interface**: Conversational UI for iterative app development
+- **Code Export**: Download generated code as HTML files
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Error Handling**: Comprehensive error messages and recovery suggestions
+- **Rate Limiting**: Automatic retry with exponential backoff for API rate limits
+- **Error Boundaries**: Graceful error handling with recovery options
 
-### 2. **Live Preview Window**
-- Real-time rendering of generated applications
-- Sandboxed iframe for safe preview rendering
-- Dynamic updates as code is modified
-- Loading states during generation
+## 🛠️ Tech Stack
 
-### 3. **Code Generation & Export**
-- Generates complete, functional HTML/CSS/JavaScript code using Gemini API
-- Download functionality to export generated code as HTML files
-- Copy-to-clipboard functionality for easy code sharing
-- Code preview in chat messages with quick copy/download actions
+- **Frontend**: React 19.1.1 with Vite 7.1.7
+- **Code Editor**: Monaco Editor (@monaco-editor/react)
+- **AI API**: Google Gemini 2.5 Flash (@google/genai)
+- **UI Components**: Lucide React icons
+- **Layout**: React Split for resizable panels
+- **Build Tool**: Vite with optimized chunking and code splitting
 
-### 4. **Built-in Code Editor**
-- Integrated Monaco Editor with syntax highlighting
-- Support for HTML, CSS, and JavaScript editing
-- Real-time preview updates when code is modified
-- Minimap disabled for cleaner interface
-- Line numbers and word wrap enabled
-- Code copy and download buttons
+## 📋 Prerequisites
 
-### 5. **Settings Modal for API Key Management**
-- Dedicated settings interface for Gemini API key input
-- Secure local storage of API keys (localStorage)
-- Security warning about API key storage
-- Link to Google AI Studio for API key generation
-- About section with version and tech stack information
+- Node.js 18+ and npm 9+
+- Google Gemini API key (free from [Google AI Studio](https://aistudio.google.com/app/apikeys))
 
-## Getting Started
+## 🚀 Quick Start
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+**Get started in 5 minutes!** See [QUICKSTART.md](./QUICKSTART.md) for a fast setup guide.
 
-### Installation
+### Basic Setup
 
-1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd newnocoderaiapp
-```
+# 1. Clone repository
+git clone https://github.com/rajshah9305/nocodeaiauggie.git
+cd nocodeaiauggie
 
-2. Install dependencies:
-```bash
+# 2. Install dependencies
 npm install
-```
 
-3. Start the development server:
-```bash
+# 3. Configure API key
+cp .env.example .env.local
+# Edit .env.local and add your API key from https://aistudio.google.com/app/apikeys
+
+# 4. Start development
 npm run dev
+
+# 5. Open http://localhost:5173
 ```
 
-4. Open your browser and navigate to `http://localhost:5173/`
-
-### Building for Production
+### Build for Production
 
 ```bash
 npm run build
+npm run preview  # Test production build locally
 ```
 
-The built files will be in the `dist` directory.
+---
 
-## Usage
+## 📚 Documentation
 
-1. **Configure API Key**:
-   - Click the Settings button (⚙️) in the top-right corner
-   - Enter your Gemini API key
-   - Click "Save Settings"
+| Guide | Purpose |
+|-------|---------|
+| **[QUICKSTART.md](./QUICKSTART.md)** | 5-minute setup guide |
+| **[SETUP.md](./SETUP.md)** | Detailed setup instructions |
+| **[DEPLOYMENT.md](./DEPLOYMENT.md)** | Deploy to Vercel, Netlify, GitHub Pages, AWS, Firebase |
+| **[API.md](./API.md)** | API documentation and code examples |
+| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | Contributing guidelines |
+| **[IMPROVEMENTS.md](./IMPROVEMENTS.md)** | What was improved in this version |
 
-2. **Describe Your Application**:
-   - Type your application description in the chat input at the bottom
-   - Example: "Create a todo list app with add, delete, and mark as complete functionality"
-   - Use Shift+Enter for multi-line input
+## 📖 Usage
 
-3. **Generate Application**:
-   - Click the Send button or press Enter
-   - Wait for the AI to generate the code
-   - View the live preview in the right panel
-   - See the generated code in the left panel
-   - Chat history shows all generated applications
+1. **Enter API Key**: Click the Settings button (⚙️) and enter your Gemini API key
+2. **Describe Your App**: Type a description of the app you want to create
+3. **Generate Code**: Click "Send message" or press Enter
+4. **Edit Code**: Modify the generated code in the editor
+5. **Preview**: See changes in real-time in the preview panel
+6. **Export**: Download the code as an HTML file
 
-4. **Edit and Export**:
-   - Edit the code in the Monaco Editor (left panel) if needed
-   - Changes will update the live preview in real-time
-   - Click "Copy" to copy the code to clipboard
-   - Click "Download" to download the code as an HTML file
-   - You can also copy/download directly from chat messages
+### Example Prompts
 
-## Technical Stack
+- "Create a todo list app with add, delete, and mark complete buttons"
+- "Build a calculator with basic operations"
+- "Make a weather dashboard with city search"
+- "Create a markdown note-taking app"
+- "Build a color palette generator"
 
-- **Frontend Framework**: React 18
-- **Build Tool**: Vite
-- **Code Editor**: Monaco Editor
-- **AI API**: Google Gemini API
-- **Styling**: CSS3 with CSS Variables
-- **Icons**: Lucide React
+## 🌐 Deployment
 
-## Project Structure
+### Vercel (Recommended)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+Follow the prompts. Set environment variables in Vercel dashboard:
+- `VITE_GEMINI_API_KEY`: Your Gemini API key
+
+### Netlify
+
+```bash
+npm install -g netlify-cli
+netlify deploy --prod --dir=dist
+```
+
+Set environment variables in Netlify dashboard under Site settings > Build & deploy > Environment.
+
+### GitHub Pages
+
+```bash
+npm run build
+git add dist/
+git commit -m "Deploy to GitHub Pages"
+git push
+```
+
+Enable GitHub Pages in repository settings, pointing to the `dist/` folder.
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create `.env.local` with these variables:
+
+```
+VITE_GEMINI_API_KEY=your_api_key_here
+VITE_APP_NAME=AI App Builder
+VITE_APP_VERSION=1.0.0
+VITE_API_TIMEOUT=60000
+VITE_MAX_RETRIES=3
+VITE_ENABLE_ANALYTICS=false
+VITE_ENABLE_ERROR_TRACKING=false
+```
+
+## 📁 Project Structure
 
 ```
 src/
-├── components/
-│   ├── ChatInterface.jsx       # Chat-based input interface
-│   ├── ChatInterface.css
-│   ├── PreviewPanel.jsx        # Live preview window
-│   ├── PreviewPanel.css
-│   ├── CodeEditor.jsx          # Monaco code editor component
-│   ├── CodeEditor.css
-│   ├── SettingsModal.jsx       # API key settings modal
-│   ├── SettingsModal.css
-│   ├── InputPanel.jsx          # Legacy input panel
-│   └── InputPanel.css
-├── services/
-│   ├── geminiService.js        # Gemini API integration
-│   └── githubService.js        # GitHub integration utilities
-├── utils/
-│   ├── errorHandler.js         # Error handling utilities
-│   └── exportFormats.js        # Code export utilities
-├── App.jsx                     # Main application component
-├── App.css                     # Application layout styles
-├── index.css                   # Global styles
-└── main.jsx                    # Application entry point
+├── components/          # React components
+│   ├── ChatInterface.jsx
+│   ├── CodeEditor.jsx
+│   ├── ErrorBoundary.jsx
+│   ├── PreviewPanel.jsx
+│   ├── SettingsModal.jsx
+│   └── *.css
+├── services/           # API services
+│   └── geminiService.js
+├── utils/              # Utility functions
+│   ├── errorHandler.js
+│   └── exportFormats.js
+├── styles/             # Global styles
+├── App.jsx
+└── main.jsx
 ```
 
-## API Integration
+## 🔐 Security
 
-The application uses the Google Generative AI API (Gemini) to convert natural language descriptions into functional web applications.
+- API keys are stored locally in browser localStorage
+- API keys are never sent to any server except Google's Gemini API
+- No user data is collected or stored
+- All code generation happens client-side
 
-### API Key Security
-- API keys are stored locally in the browser's localStorage
-- Keys are never sent to any server except Google's Gemini API
-- Users should keep their API keys private
+## 🐛 Troubleshooting
 
-### Error Handling
-- Invalid API key detection
-- Rate limit handling
-- Network error management
-- User-friendly error messages
+### "Invalid API Key" Error
 
-## Features Implemented
+- Verify your API key is correct
+- Check that the key is from Google AI Studio
+- Ensure the key has Gemini API access enabled
 
-✅ Chat-based natural language input interface
-✅ Live preview window with sandboxed iframe
-✅ Code generation using Gemini API (gemini-2.0-flash model)
-✅ Built-in Monaco code editor with syntax highlighting
-✅ Settings modal for API key management
-✅ Code export (download as HTML)
-✅ Copy-to-clipboard functionality
-✅ Error handling and loading states
-✅ Responsive split-panel design with resizable panels
-✅ Professional UI with modern design
-✅ Chat history with message timestamps
-✅ Example prompts for quick start
-✅ Real-time code preview updates
-✅ API key validation and security warnings
+### "Rate Limit Exceeded" Error
 
-## Browser Support
+- Wait a few seconds and try again
+- The app automatically retries with exponential backoff
+- Check your API quota in Google Cloud Console
 
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
+### Code Not Generating
 
-## Future Enhancements
+- Try a simpler description
+- Check browser console for detailed error messages
+- Ensure your internet connection is stable
 
-- Support for exporting to multiple frameworks (React, Vue, Angular)
-- Application templates and presets
-- Version history and undo/redo
-- Custom CSS themes
-- Application hosting integration
-- Collaborative editing
-- Code refactoring suggestions
+### Preview Not Updating
 
-## License
+- Check that the generated code is valid HTML
+- Look for JavaScript errors in browser console
+- Try refreshing the page
 
-MIT
+## 📝 License
 
-## Support
+MIT License - feel free to use this project for personal or commercial purposes.
 
-For issues or questions, please open an issue on the repository.
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Support
+
+For issues and questions, please open an issue on GitHub.
+
+---
+
+**Built with ❤️ using React, Vite, and Google Gemini AI**

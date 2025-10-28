@@ -1,3 +1,6 @@
+/* Import mobile optimization styles */
+@import './styles/mobile.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -116,6 +119,3 @@ code, pre {
   background: linear-gradient(180deg, var(--color-accent), var(--color-hover));
   box-shadow: 0 0 6px rgba(255, 107, 53, 0.3);
 }
-
-/* Import mobile optimization styles */
-@import './styles/mobile.css';

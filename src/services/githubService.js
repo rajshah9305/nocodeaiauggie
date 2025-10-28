@@ -130,7 +130,7 @@ export const saveToGitHubRepository = async (
         const data = await getResponse.json();
         sha = data.sha;
       }
-    } catch (e) {
+    } catch {
       // File doesn't exist yet, that's fine
     }
 

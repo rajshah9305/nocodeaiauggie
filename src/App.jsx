@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import Split from 'react-split';
 import { Settings } from 'lucide-react';
+import { validateApiKey } from './utils/errorHandler';
 import PreviewPanel from './components/PreviewPanel';
 import CodeEditor from './components/CodeEditor';
 import ChatInterface from './components/ChatInterface';
 import SettingsModal from './components/SettingsModal';
+import ErrorBoundary from './components/ErrorBoundary';
 import { generateAppCode } from './services/geminiService';
 import './App.css';
 
@@ -30,6 +32,23 @@ function App() {
   };
 
   const handleGenerate = async (description) => {
+    // Early API key validation
+    try {
+      validateApiKey(apiKey);
+    } catch (e) {
+      const errorMessage = e.message || 'API key appears to be invalid';
+      setError(errorMessage);
+      setIsSettingsOpen(true);
+      const errorChatMessage = {
+        id: Date.now(),
+        type: 'error',
+        content: errorMessage,
+        timestamp: new Date(),
+      };
+      setChatMessages((prev) => [...prev, errorChatMessage]);
+      return;
+    }
+
     setIsGenerating(true);
     setError('');
 
@@ -56,8 +75,18 @@ function App() {
       };
       setChatMessages((prev) => [...prev, assistantMessage]);
     } catch (err) {
-      setError(err.message);
+      const errorMessage = err.message || 'An unknown error occurred';
+      setError(errorMessage);
       console.error('Generation error:', err);
+      
+      // Add error message to chat
+      const errorChatMessage = {
+        id: Date.now() + 1,
+        type: 'error',
+        content: errorMessage,
+        timestamp: new Date(),
+      };
+      setChatMessages((prev) => [...prev, errorChatMessage]);
     } finally {
       setIsGenerating(false);
     }
@@ -72,72 +101,83 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <div className="app-header">
-        <div className="header-content">
-          <div className="header-branding">
-            <div className="header-logo">✨</div>
-            <div className="header-text">
-              <h1 className="app-title">RAJ AI APP BUILDER</h1>
-              <p className="app-subtitle">Transform Ideas into Code</p>
+    <ErrorBoundary>
+      <div className="app-container">
+        <div className="app-header">
+          <div className="header-content">
+            <div className="header-branding">
+              <div className="header-logo">✨</div>
+              <div className="header-text">
+                <h1 className="app-title">RAJ AI APP BUILDER</h1>
+                <p className="app-subtitle">Transform Ideas into Code</p>
+              </div>
             </div>
           </div>
+          <button
+            className="settings-button"
+            onClick={() => setIsSettingsOpen(true)}
+            title="Settings"
+          >
+            <Settings size={24} />
+          </button>
         </div>
-        <button
-          className="settings-button"
-          onClick={() => setIsSettingsOpen(true)}
-          title="Settings"
-        >
-          <Settings size={24} />
-        </button>
-      </div>
 
-      {error && (
-        <div className="error-banner">
-          <div className="error-content">
-            <span>{error}</span>
-            <button
-              className="error-close"
-              onClick={() => setError('')}
-            >
-              ✕
-            </button>
+        {error && (
+          <div className={`error-banner ${error.toLowerCase().includes('rate limit') ? 'rate-limit' : ''}`}>
+            <div className="error-content">
+              <span>{error}</span>
+              {(error.toLowerCase().includes('api key') || error.toLowerCase().includes('authentication')) && (
+                <button
+                  className="error-action"
+                  onClick={() => setIsSettingsOpen(true)}
+                  title="Open Settings"
+                >
+                  Open Settings
+                </button>
+              )}
+              <button
+                className="error-close"
+                onClick={() => setError('')}
+              >
+                ✕
+              </button>
+            </div>
           </div>
+        )}
+
+        <div className="app-content">
+          <Split
+            sizes={[50, 50]}
+            minSize={300}
+            gutterSize={8}
+            gutterAlign="center"
+            snapOffset={30}
+            dragInterval={1}
+            direction="horizontal"
+            cursor="col-resize"
+            className="split-container"
+          >
+            <CodeEditor code={code} onCodeChange={handleCodeChange} />
+            <PreviewPanel code={code} isGenerating={isGenerating} />
+          </Split>
         </div>
-      )}
 
-      <div className="app-content">
-        <Split
-          sizes={[50, 50]}
-          minSize={300}
-          gutterSize={8}
-          gutterAlign="center"
-          snapOffset={30}
-          dragInterval={1}
-          direction="horizontal"
-          cursor="col-resize"
-          className="split-container"
-        >
-          <CodeEditor code={code} onCodeChange={handleCodeChange} />
-          <PreviewPanel code={code} isGenerating={isGenerating} />
-        </Split>
+        <ChatInterface
+          onGenerate={handleGenerate}
+          isGenerating={isGenerating}
+          apiKey={apiKey}
+          onCodeSelect={handleCodeSelect}
+          chatMessages={chatMessages}
+        />
+
+        <SettingsModal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          apiKey={apiKey}
+          onApiKeyChange={handleApiKeyChange}
+        />
       </div>
-
-      <ChatInterface
-        onGenerate={handleGenerate}
-        isGenerating={isGenerating}
-        apiKey={apiKey}
-        onCodeSelect={handleCodeSelect}
-        chatMessages={chatMessages}
-      />
-
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        apiKey={apiKey}
-        onApiKeyChange={handleApiKeyChange}
-      />
-    </div>
+    </ErrorBoundary>
   );
 }
 

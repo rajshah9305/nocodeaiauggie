@@ -1,40 +1,109 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import { validateInput, validateApiKey } from '../utils/errorHandler';
 
-const SYSTEM_PROMPT = `You are an expert web developer. Your task is to generate complete, functional HTML/CSS/JavaScript code for web applications based on user descriptions.
+const SYSTEM_PROMPT = `You are an AI no-code application builder. The user will provide a high-level request for a simple web application (like a calculator, to-do list, timer, weather widget, or dashboard). You must respond ONLY with the complete, fully functional HTML, CSS, and JavaScript code for a single-file application.
 
-IMPORTANT RULES:
-1. Generate ONLY valid HTML code that can run standalone in a browser
-2. Include all CSS within <style> tags in the HTML
-3. Include all JavaScript within <script> tags in the HTML
-4. Make the application fully functional and interactive
-5. Use modern CSS with flexbox/grid for layout
-6. Ensure responsive design
-7. Use a clean, professional design with good UX
-8. Include proper error handling
-9. Make sure the app is visually appealing with good color schemes
-10. The code must be complete and ready to run - no external dependencies except standard browser APIs
+CRITICAL REQUIREMENTS:
+1. Output ONLY valid HTML code - nothing else, no explanations or markdown
+2. Start with <!DOCTYPE html> and include complete <html> structure
+3. Include all CSS within <style> tags in the <head>
+4. Include all JavaScript within <script> tags before </body>
+5. Use Tailwind CSS (included via CDN) for styling when possible
+6. Make the application fully functional and interactive
+7. Ensure responsive design that works on mobile and desktop
+8. Use a clean, professional, visually appealing design
+9. Include proper error handling and user feedback
+10. The code must be complete, runnable, and ready to display in an iframe immediately
+11. Do NOT include any explanations, comments outside code, or markdown formatting
+12. Do NOT use external APIs or dependencies beyond what's available in the browser
 
-Return ONLY the HTML code, nothing else. No markdown, no explanations, just the complete HTML file.`;
+The output must be production-ready HTML that can run standalone in a browser iframe.`;
 
-export const generateAppCode = async (description, apiKey) => {
+/**
+ * Sleep utility for delays
+ */
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
+ * Check if error is a rate limit error
+ */
+const isRateLimitError = (error) => {
+  const errorMessage = error.message || error.toString();
+  return (
+    errorMessage.includes('429') ||
+    errorMessage.includes('rate limit') ||
+    errorMessage.includes('RESOURCE_EXHAUSTED') ||
+    errorMessage.includes('too many requests')
+  );
+};
+
+/**
+ * Get retry delay based on attempt number (exponential backoff)
+ */
+const getRetryDelay = (attempt) => {
+  return Math.min(1000 * Math.pow(2, attempt), 30000); // Max 30 seconds
+};
+
+/**
+ * Create a timeout promise that rejects after specified milliseconds
+ */
+const createTimeoutPromise = (ms) => {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject(new Error(`Request timeout: No response from AI model after ${ms}ms`));
+    }, ms);
+  });
+};
+
+export const generateAppCode = async (description, apiKey, retryAttempt = 0, maxRetries = 3) => {
   try {
     // Validate inputs
     const validatedApiKey = validateApiKey(apiKey);
     const validatedDescription = validateInput(description);
 
-    const genAI = new GoogleGenerativeAI(validatedApiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    // Use the latest Gemini model with better code generation
+    const MODEL = 'gemini-2.5-flash-preview-09-2025';
+    console.log(`Initializing Gemini AI with model: ${MODEL}`);
+    const client = new GoogleGenAI({ apiKey: validatedApiKey });
+    console.log('Model initialized successfully');
 
     const prompt = `${SYSTEM_PROMPT}
 
-User Request: ${validatedDescription}
+User Request: ${validatedDescription}`;
 
-Generate a complete, functional web application based on this description. The application should be ready to run immediately in a browser.`;
+    console.log('Sending prompt to Gemini API...');
+    // Set a 60-second timeout for the API call
+    const timeoutMs = 60000;
+    const response = await Promise.race([
+      client.models.generateContent({
+        model: MODEL,
+        contents: prompt,
+        generationConfig: {
+          temperature: 0.1, // Lower temperature for more deterministic, consistent code
+        },
+      }),
+      createTimeoutPromise(timeoutMs)
+    ]);
+    console.log('Received response from Gemini API:', response);
 
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+    // Check if response exists
+    if (!response) {
+      console.error('Invalid response structure:', response);
+      throw new Error('Invalid response from AI model: missing response object');
+    }
+
+    // Extract text from response
+    let text;
+    try {
+      text = response.text;
+      if (!text) {
+        throw new Error('No text content in response');
+      }
+    } catch (textError) {
+      console.error('Error extracting text from response:', textError);
+      console.error('Response object:', response);
+      throw new Error(`Failed to extract text from response: ${textError.message}`);
+    }
 
     // Clean up the response - remove markdown code blocks if present
     let code = text;
@@ -56,23 +125,28 @@ Generate a complete, functional web application based on this description. The a
     const errorMessage = error.message || error.toString();
 
     // Check for API key errors
-    if (errorMessage.includes('API key') || errorMessage.includes('INVALID_ARGUMENT')) {
+    if (errorMessage.includes('API key') || errorMessage.includes('INVALID_ARGUMENT') || errorMessage.includes('401')) {
       throw new Error('Invalid API key. Please check your Gemini API key in Settings.');
     }
 
-    // Check for rate limit errors (429, RESOURCE_EXHAUSTED, quota exceeded)
-    if (
-      errorMessage.includes('429') ||
-      errorMessage.includes('rate limit') ||
-      errorMessage.includes('RESOURCE_EXHAUSTED') ||
-      errorMessage.includes('quota') ||
-      errorMessage.includes('too many requests')
-    ) {
-      throw new Error('Rate limit exceeded. Please wait a moment and try again.');
+    // Handle rate limit errors with automatic retry
+    if (isRateLimitError(error)) {
+      if (retryAttempt < maxRetries) {
+        const delay = getRetryDelay(retryAttempt);
+        console.log(`Rate limit hit. Retrying in ${delay}ms... (Attempt ${retryAttempt + 1}/${maxRetries})`);
+
+        // Wait before retrying
+        await sleep(delay);
+
+        // Retry the request
+        return generateAppCode(description, apiKey, retryAttempt + 1, maxRetries);
+      } else {
+        throw new Error('Rate limit exceeded. Please wait a few seconds and try again.');
+      }
     }
 
     // Check for permission/authentication errors
-    if (errorMessage.includes('PERMISSION_DENIED') || errorMessage.includes('UNAUTHENTICATED')) {
+    if (errorMessage.includes('PERMISSION_DENIED') || errorMessage.includes('UNAUTHENTICATED') || errorMessage.includes('403')) {
       throw new Error('Authentication failed. Please check your API key in Settings.');
     }
 

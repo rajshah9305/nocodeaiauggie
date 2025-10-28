@@ -269,6 +269,22 @@
   font-size: 14px;
 }
 
+.error-message-bubble.rate-limit {
+  background: linear-gradient(135deg, #FFF5E5 0%, #FFFAF0 100%);
+  border: 1px solid #FFA726;
+  color: #E65100;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
 .message-time {
   font-size: 11px;
   color: #999;
