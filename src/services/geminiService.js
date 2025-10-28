@@ -101,9 +101,11 @@ export const generateAppCode = async (
     timeoutMs = 60000,
     modelName = 'gemini-1.5-flash-latest'
   } = options;
-
   try {
-    // Validate inputs
+    // 1. Get API key securely from environment variables
+    const apiKey = process.env.GEMINI_API_KEY;
+
+    // 2. Validate inputs (description from user, key from server)
     const validatedApiKey = validateApiKey(apiKey);
     const validatedDescription = validateInput(description);
 
@@ -121,7 +123,7 @@ export const generateAppCode = async (
     console.log('Model initialized successfully');
 
     console.log(`Sending request to Gemini API... (Attempt ${retryAttempt + 1})`);
-    
+
     // Create the generation request
     const generationPromise = model.generateContent({
       contents: [{ role: 'user', parts: [{ text: validatedDescription }] }],
@@ -145,7 +147,7 @@ export const generateAppCode = async (
       throw new Error('Invalid response from AI model: missing response object');
     }
 
-    // Extract text from response
+    // Extract text from response (new SDK method)
     let text;
     try {
       text = result.response.text();
@@ -266,7 +268,7 @@ export const generateAppCode = async (
         'Network error. Please check your internet connection and try again.'
       );
     }
-    
+
     // Throw a more user-friendly general error
     throw new Error(
       `Failed to generate code: ${errorMessage}. Please try again.`
@@ -274,3 +276,23 @@ export const generateAppCode = async (
   }
 };
 
+// This is the Next.js API route handler that uses your function
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
+  const { description } = req.body;
+
+  if (!description) {
+    return res.status(400).json({ error: 'No description provided.' });
+  }
+
+  try {
+    const code = await generateAppCode(description);
+    return res.status(200).json({ code: code });
+  } catch (error) {
+    console.error('Error in /api/generate:', error);
+    return res.status(500).json({ error: error.message || 'An unknown error occurred.' });
+  }
+}
