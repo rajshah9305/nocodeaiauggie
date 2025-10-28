@@ -182,39 +182,6 @@ The application uses the Google Generative AI API (Gemini) to convert natural la
 - Network error management
 - User-friendly error messages
 
-## Features Implemented
-
-✅ Chat-based natural language input interface
-✅ Live preview window with sandboxed iframe
-✅ Code generation using Gemini API (gemini-2.0-flash model)
-✅ Built-in Monaco code editor with syntax highlighting
-✅ Settings modal for API key management
-✅ Code export (download as HTML)
-✅ Copy-to-clipboard functionality
-✅ Error handling and loading states
-✅ Responsive split-panel design with resizable panels
-✅ Professional UI with modern design
-✅ Chat history with message timestamps
-✅ Example prompts for quick start
-✅ Real-time code preview updates
-✅ API key validation and security warnings
-
-## Browser Support
-
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-
-## Future Enhancements
-
-- Support for exporting to multiple frameworks (React, Vue, Angular)
-- Application templates and presets
-- Version history and undo/redo
-- Custom CSS themes
-- Application hosting integration
-- Collaborative editing
-- Code refactoring suggestions
-
 ## License
 
 MIT
