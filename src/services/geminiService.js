@@ -83,7 +83,7 @@ const createAbortPromise = (signal) => {
  * @param {object} [options={}] - Optional configuration
  * @param {number} [options.maxRetries=3] - Maximum number of retries
  * @param {number} [options.timeoutMs=60000] - Request timeout in milliseconds
- * @param {string} [options.modelName='gemini-1.5-flash-latest'] - The model to use
+ * @param {string} [options.modelName='gemini-2.5-flash'] - The model to use
  * @param {AbortSignal | null} [abortSignal=null] - An optional AbortSignal to cancel the request
  * @param {number} [retryAttempt=0] - Internal retry counter
  * @returns {Promise<string>} Generated HTML code
@@ -99,13 +99,10 @@ export const generateAppCode = async (
   const {
     maxRetries = 3,
     timeoutMs = 60000,
-    modelName = 'gemini-1.5-flash-latest'
+    modelName = 'gemini-2.5-flash'
   } = options;
   try {
-    // 1. Get API key securely from environment variables
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    // 2. Validate inputs (description from user, key from server)
+    // 1. Validate inputs (description from user, key from client)
     const validatedApiKey = validateApiKey(apiKey);
     const validatedDescription = validateInput(description);
 
@@ -129,7 +126,7 @@ export const generateAppCode = async (
       contents: [{ role: 'user', parts: [{ text: validatedDescription }] }],
       generationConfig: {
         temperature: 0.1, // Lower temperature for more deterministic code
-        maxOutputTokens: 8192, // Max tokens for 1.5 flash
+        maxOutputTokens: 8192, // Max tokens for Gemini 2.5 Flash
       },
     });
 
