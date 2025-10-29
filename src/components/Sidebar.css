@@ -1,0 +1,33 @@
+.sidebar {
+  width: 240px;
+  border-right: 1px solid var(--color-gray-200);
+  background: var(--color-bg);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sidebar-section { display: flex; flex-direction: column; gap: 6px; }
+.side-label { font-size: 11px; color: var(--color-gray-600); text-transform: uppercase; letter-spacing: 0.8px; padding: 8px 10px; }
+
+.side-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-300);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: all var(--transition-base);
+  text-align: left;
+}
+.side-item:hover { background: var(--color-text); color: var(--color-bg); border-color: var(--color-accent); }
+.side-item.active { background: linear-gradient(135deg, var(--color-accent), var(--color-hover)); color: #fff; border: none; box-shadow: var(--shadow-accent); }
+.side-item.danger { border-color: var(--color-accent); color: var(--color-accent); }
+.side-item.danger:hover { background: var(--color-accent); color: #fff; }
+
+@media (max-width: 1000px) { .sidebar { width: 72px; padding: 12px 8px; } .side-item span, .side-label { display: none; } }
+
+

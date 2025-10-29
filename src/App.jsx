@@ -12,6 +12,8 @@ import CommandPalette from './components/CommandPalette';
 import ErrorBoundary from './components/ErrorBoundary';
 import { generateAppCode } from './services/geminiService';
 import './App.css';
+import Topbar from './components/Topbar';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [code, setCode] = useState('');
@@ -136,24 +138,7 @@ function App() {
     <ErrorBoundary>
       <TwentyFirstToolbar config={{ plugins: [ReactPlugin] }} />
       <div className="app-container">
-        <div className="app-header">
-          <div className="header-content">
-            <div className="header-branding">
-              <div className="header-logo">✨</div>
-              <div className="header-text">
-                <h1 className="app-title">RAJ AI APP BUILDER</h1>
-                <p className="app-subtitle">Transform Ideas into Code</p>
-              </div>
-            </div>
-          </div>
-          <button
-            className="settings-button"
-            onClick={() => setIsSettingsOpen(true)}
-            title="Settings"
-          >
-            <Settings size={24} />
-          </button>
-        </div>
+        <Topbar onOpenSettings={() => setIsSettingsOpen(true)} onOpenCommand={() => setIsCmdOpen(true)} />
 
         {error && (
           <div className={`error-banner ${error.toLowerCase().includes('rate limit') ? 'rate-limit' : ''}`}>
@@ -179,31 +164,38 @@ function App() {
         )}
 
         <div className="app-content">
-          {showSplitView ? (
-            <Split
-              sizes={[50, 50]}
-              minSize={300}
-              gutterSize={8}
-              gutterAlign="center"
-              snapOffset={30}
-              dragInterval={1}
-              direction="horizontal"
-              cursor="col-resize"
-              className="split-container"
-            >
-              <CodeEditor code={code} onCodeChange={handleCodeChange} isGenerating={isGenerating} />
-              <PreviewPanel code={code} isGenerating={isGenerating} />
-            </Split>
-          ) : (
-            <ChatInterface
-              onGenerate={handleGenerate}
-              isGenerating={isGenerating}
-              apiKey={apiKey}
-              onCodeSelect={handleCodeSelect}
-              chatMessages={chatMessages}
-              fullScreen={true}
-            />
-          )}
+          <Sidebar
+            showSplitView={showSplitView}
+            onToggleSplit={() => setShowSplitView((v) => !v)}
+            onClearChat={() => setChatMessages([])}
+          />
+          <div className="content-area">
+            {showSplitView ? (
+              <Split
+                sizes={[50, 50]}
+                minSize={300}
+                gutterSize={8}
+                gutterAlign="center"
+                snapOffset={30}
+                dragInterval={1}
+                direction="horizontal"
+                cursor="col-resize"
+                className="split-container"
+              >
+                <CodeEditor code={code} onCodeChange={handleCodeChange} isGenerating={isGenerating} />
+                <PreviewPanel code={code} isGenerating={isGenerating} />
+              </Split>
+            ) : (
+              <ChatInterface
+                onGenerate={handleGenerate}
+                isGenerating={isGenerating}
+                apiKey={apiKey}
+                onCodeSelect={handleCodeSelect}
+                chatMessages={chatMessages}
+                fullScreen={true}
+              />
+            )}
+          </div>
         </div>
 
         {showSplitView && (
