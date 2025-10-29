@@ -288,15 +288,17 @@
   overflow: hidden;
   display: flex;
   min-height: 0;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   background: var(--color-bg);
+  position: relative;
 }
 
 .split-container {
   display: flex;
   flex: 1;
   overflow: hidden;
-  animation: expandView 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: expandView 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
 }
 
 /* ===== PREMIUM GUTTER (DIVIDER) ===== */
