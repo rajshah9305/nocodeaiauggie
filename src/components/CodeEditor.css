@@ -152,7 +152,7 @@
 
 .editor-placeholder p {
   font-size: 14px;
-  color: #1A1A1A;
+  color: var(--color-text);
   max-width: 400px;
   line-height: 1.5;
   margin: 0;

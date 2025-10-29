@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Split from 'react-split';
 import { Settings } from 'lucide-react';
+import { TwentyFirstToolbar } from '@21st-extension/toolbar-react';
+import { ReactPlugin } from '@21st-extension/react';
 import { validateApiKey } from './utils/errorHandler';
 import PreviewPanel from './components/PreviewPanel';
 import CodeEditor from './components/CodeEditor';
@@ -118,6 +120,7 @@ function App() {
 
   return (
     <ErrorBoundary>
+      <TwentyFirstToolbar config={{ plugins: [ReactPlugin] }} />
       <div className="app-container">
         <div className="app-header">
           <div className="header-content">

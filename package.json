@@ -27,6 +27,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@21st-extension/react": "^0.5.14",
+    "@21st-extension/toolbar-react": "^0.5.14",
     "@google/generative-ai": "^0.24.1",
     "@monaco-editor/react": "^4.7.0",
     "lucide-react": "^0.548.0",

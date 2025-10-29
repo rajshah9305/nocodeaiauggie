@@ -274,22 +274,4 @@ export const generateAppCode = async (
 };
 
 // This is the Next.js API route handler that uses your function
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
-
-  const { description } = req.body;
-
-  if (!description) {
-    return res.status(400).json({ error: 'No description provided.' });
-  }
-
-  try {
-    const code = await generateAppCode(description);
-    return res.status(200).json({ code: code });
-  } catch (error) {
-    console.error('Error in /api/generate:', error);
-    return res.status(500).json({ error: error.message || 'An unknown error occurred.' });
-  }
-}
+// Note: Removed Next.js API route handler to keep this module browser-safe under Vite.
