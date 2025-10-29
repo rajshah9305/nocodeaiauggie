@@ -13,9 +13,9 @@
   align-items: center;
   padding: 16px 24px;
   border-bottom: 2px solid var(--color-accent);
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+  background: #FFFFFF;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.08);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
 }
 
 .header-content {
@@ -62,7 +62,7 @@
   margin: 0;
   font-size: 12px;
   font-weight: 500;
-  color: #999;
+  color: #1A1A1A;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
@@ -72,7 +72,7 @@
   border: 2px solid transparent;
   padding: 10px 12px;
   cursor: pointer;
-  color: #999;
+  color: #1A1A1A;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,19 +109,19 @@
 
 /* Error Banner */
 .error-banner {
-  background: linear-gradient(135deg, #FEE5E5 0%, #FFF0F0 100%);
-  border-bottom: 2px solid #FF6B6B;
+  background: #FFFFFF;
+  border-bottom: 2px solid #FF6B35;
   padding: 14px 20px;
   animation: slideDown 0.3s ease;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.1);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
 }
 
 .error-banner.rate-limit {
-  background: linear-gradient(135deg, #FFF5E5 0%, #FFFAF0 100%);
-  border-bottom: 2px solid #FFA726;
+  background: #FFFFFF;
+  border-bottom: 2px solid #FF6B35;
   animation: slideDown 0.3s ease, pulse 2s ease-in-out infinite;
-  box-shadow: 0 2px 8px rgba(255, 167, 38, 0.15);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.15);
 }
 
 @keyframes slideDown {
@@ -170,7 +170,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #C92A2A;
+  color: #FF6B35;
   font-size: 14px;
   font-weight: 600;
   max-width: 1200px;
@@ -190,12 +190,12 @@
 }
 
 .error-banner.rate-limit .error-content {
-  color: #E65100;
+  color: #FF6B35;
 }
 
 .error-close {
   background: transparent;
-  color: #C92A2A;
+  color: #FF6B35;
   font-size: 20px;
   padding: 4px 8px;
   margin-left: 16px;
@@ -208,7 +208,7 @@
 
 .error-close:hover {
   opacity: 1;
-  background-color: rgba(201, 42, 42, 0.1);
+  background-color: rgba(255, 107, 53, 0.1);
 }
 
 /* Main Content Area */

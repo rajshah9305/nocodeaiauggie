@@ -8,18 +8,18 @@
 }
 
 :root {
-  /* Color Palette - Enhanced */
+  /* Color Palette - Orange, White, Black */
   --color-bg: #FFFFFF;
   --color-text: #1A1A1A;
   --color-accent: #FF6B35;
-  --color-secondary-bg: #F8F9FA;
-  --color-border: #E8E8E8;
+  --color-secondary-bg: #FFFFFF;
+  --color-border: #1A1A1A;
   --color-hover: #FF8555;
   --color-active: #E55525;
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-error: #EF4444;
-  --color-info: #3B82F6;
+  --color-success: #FF6B35;
+  --color-warning: #FF6B35;
+  --color-error: #1A1A1A;
+  --color-info: #FF6B35;
 
   /* Typography */
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -83,7 +83,7 @@ input, textarea {
 }
 
 input:hover, textarea:hover {
-  border-color: #D0D0D0;
+  border-color: #FF6B35;
   background-color: #FFFFFF;
 }
 
@@ -109,7 +109,7 @@ code, pre {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-border), #D0D0D0);
+  background: linear-gradient(180deg, #FF6B35, #E55525);
   border-radius: 10px;
   border: 2px solid var(--color-secondary-bg);
   transition: all 0.3s ease;

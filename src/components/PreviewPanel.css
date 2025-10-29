@@ -48,7 +48,7 @@
   gap: 16px;
   padding: 40px;
   text-align: center;
-  color: #666;
+  color: #1A1A1A;
 }
 
 .preview-placeholder h3 {
@@ -60,7 +60,7 @@
 
 .preview-placeholder p {
   font-size: 14px;
-  color: #666;
+  color: #1A1A1A;
   max-width: 400px;
   line-height: 1.5;
   margin: 0;
