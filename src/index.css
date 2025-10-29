@@ -197,3 +197,20 @@ code, pre {
   background-color: var(--color-accent);
   color: white;
 }
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-accent-lighter), 0 0 0 1px var(--color-accent) inset;
+  border-radius: var(--radius-md);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

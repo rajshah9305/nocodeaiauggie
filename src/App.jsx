@@ -8,6 +8,7 @@ import PreviewPanel from './components/PreviewPanel';
 import CodeEditor from './components/CodeEditor';
 import ChatInterface from './components/ChatInterface';
 import SettingsModal from './components/SettingsModal';
+import CommandPalette from './components/CommandPalette';
 import ErrorBoundary from './components/ErrorBoundary';
 import { generateAppCode } from './services/geminiService';
 import './App.css';
@@ -20,6 +21,19 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [showSplitView, setShowSplitView] = useState(false);
+  const [isCmdOpen, setIsCmdOpen] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      const isMod = e.metaKey || e.ctrlKey;
+      if (isMod && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        setIsCmdOpen((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   // Load API key from localStorage on mount
   useEffect(() => {
@@ -202,6 +216,14 @@ function App() {
             fullScreen={false}
           />
         )}
+
+      <CommandPalette
+        isOpen={isCmdOpen}
+        onClose={() => setIsCmdOpen(false)}
+        onToggleSplit={() => setShowSplitView((v) => !v)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
+        onClearChat={() => setChatMessages([])}
+      />
 
         <SettingsModal
           isOpen={isSettingsOpen}
